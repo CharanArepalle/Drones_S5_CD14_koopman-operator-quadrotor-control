@@ -1,0 +1,18 @@
+# Python environments used by this project:
+#   - Python 3.10: established Windows PyBullet setup
+#   - Python 3.12: MuJoCo setup used in WSL
+
+# Numerical methods and analysis
+numpy>=2.0,<2.3
+scipy>=1.10,<2.0
+matplotlib>=3.7,<4.0
+transforms3d>=0.4.1,<0.5
+Pillow>=9.5,<13.0
+
+# Simulator runtimes
+pybullet>=3.2.6,<4.0
+gymnasium>=1.2,<2.0
+mujoco>=3.14,<4.0
+
+# Tests
+pytest>=7.3,<10.0
