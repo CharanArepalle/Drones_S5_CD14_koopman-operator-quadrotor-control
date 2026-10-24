@@ -1,0 +1,79 @@
+{
+  "selected_order": 5,
+  "training_transition_count": 9000,
+  "matrix_shapes": {
+    "G1": [
+      45,
+      48
+    ],
+    "G2": [
+      48,
+      48
+    ],
+    "K_operator_moments": [
+      45,
+      48
+    ],
+    "K_operator_lstsq": [
+      45,
+      48
+    ],
+    "A_lstsq": [
+      45,
+      45
+    ],
+    "B_lstsq": [
+      45,
+      3
+    ],
+    "A_moments": [
+      45,
+      45
+    ],
+    "B_moments": [
+      45,
+      3
+    ],
+    "Q_lqr": [
+      45,
+      45
+    ],
+    "R_lqr": [
+      3,
+      3
+    ],
+    "P_riccati": [
+      45,
+      45
+    ],
+    "Omega_lqr": [
+      3,
+      45
+    ],
+    "equilibrium_lift": [
+      45,
+      1
+    ],
+    "equilibrium_defect": [
+      45,
+      1
+    ]
+  },
+  "definitions": {
+    "G1": "(1/M) * Y.T @ X, with X_k = [z_k; u_k] and Y_k = z_(k+1)",
+    "G2": "(1/M) * X.T @ X",
+    "K_operator_moments": "G1 @ pinv(G2); this is the moment-matrix form of the controlled least-squares estimate",
+    "K_operator_lstsq": "[A B] obtained using numerically stable least squares",
+    "Omega_lqr": "Discrete LQR feedback gain; u = -Omega_lqr @ (z - z_equilibrium)"
+  },
+  "X_design_rank": 48,
+  "X_design_condition_number": 643.9050286219325,
+  "G2_rank": 48,
+  "G2_condition_number": 414613.68588463304,
+  "K_moment_vs_lstsq_relative_frobenius_difference": 2.8212512461331486e-12,
+  "K_moment_vs_lstsq_max_absolute_difference": 9.005751006041507e-12,
+  "equilibrium_defect_norm": 0.007252102270408542,
+  "dare_residual_frobenius_norm": 3.5441885866608055e-09,
+  "lqr_closed_loop_spectral_radius": 0.9995388412835936,
+  "artifacts_directory": "matrices"
+}
