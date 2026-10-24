@@ -1,0 +1,4 @@
+﻿Algorithm,Mean controller solve time (ms),95th percentile solve time (ms),Optimizer success rate (%),Fallback steps,Actuator saturation fraction (%),Total control effort integral (N m)^2 s,MPC horizon (steps)
+PID,,,,,1.0,0.009786167525672228,
+Koopman-LQR,,,,,4.0,0.006318876991666649,
+Koopman-MPC,1.2241709999398154,2.5419400002647308,100.0,0,1.5,0.0043775021796189015,10
