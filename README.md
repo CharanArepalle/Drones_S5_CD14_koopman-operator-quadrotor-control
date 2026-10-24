@@ -1,3 +1,16 @@
+## <u>Team CD-14:</u>
+
+## Team Members
+
+| S. No. | Name | Roll Number | Email |
+|:---:|---|---|---|
+| 1 | Arepalle Charan Kumar Reddy | `CB.SC.U4AIE24207` | [cb.sc.u4aie24207@cb.students.amrita.edu](mailto:cb.sc.u4aie24207@cb.students.amrita.edu) |
+| 2 | Polturi Aditya Pavan | `CB.SC.U4AIE24344` | [cb.sc.u4aie24344@cb.students.amrita.edu](mailto:cb.sc.u4aie24344@cb.students.amrita.edu) |
+| 3 | Koushik V | `CB.SC.U4AIE24330` | [cb.sc.u4aie24330@cb.students.amrita.edu](mailto:cb.sc.u4aie24330@cb.students.amrita.edu) |
+| 4 | Rohit kanna S | `CB.SC.U4AIE24349` | [cb.sc.u4aie24349@cb.students.amrita.edu](mailto:cb.sc.u4aie24349@cb.students.amrita.edu) |
+| 5 | Mahendrada Shalini | `CB.SC.U4AIE24334` | [cb.sc.u4aie24334@cb.students.amrita.edu](mailto:cb.sc.u4aie24334@cb.students.amrita.edu) |
+
+
 # Data-Driven Attitude Modeling and Control of Quadrotor UAVs Using the Koopman Operator
 
 ## Abstract
@@ -13,6 +26,69 @@ Conventional model-based control methods rely on mathematical representations of
 Koopman operator theory provides a framework for approximating nonlinear dynamics through the evolution of observable functions. By mapping the physical attitude state into a higher-dimensional observable space, the nonlinear system can be represented approximately by a finite-dimensional linear controlled model. Extended Dynamic Mode Decomposition (EDMD) is used to identify this model from trajectory data, enabling its use in prediction and feedback control.
 
 This project implements a Koopman-based attitude modeling and control framework using simulated nonlinear quadrotor dynamics. The identified model is evaluated through held-out trajectory prediction and compared with a direct linear DMDc baseline. For closed-loop attitude regulation, Koopman-LQR and Koopman-MPC are compared with a conventional PID controller. Additional studies investigate model-order selection, identification under measurement noise, and disturbance-observer-based torque compensation. The overall objective is to assess the predictive and control capabilities of the implemented methods under clearly defined simulation conditions.
+
+## Installation
+
+### Prerequisites
+
+The project uses Python and scientific-computing libraries for Koopman model identification, controller evaluation, and simulation. The established environments are:
+
+- **Python 3.10:** Windows environment used for PyBullet.
+- **Python 3.12:** WSL environment used for MuJoCo.
+- **`requirements.txt`:** Specifies the required numerical, simulation, and testing packages with version constraints.
+
+### 1. Install on Windows (PyBullet)
+
+Open Command Prompt in the project root directory and execute:
+
+```bat
+py -3.10 -m venv .venv-pybullet
+.venv-pybullet\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+This creates a dedicated Python 3.10 virtual environment and installs the dependencies listed in `requirements.txt`.
+
+### 2. Install in WSL (MuJoCo)
+
+Open your WSL terminal, navigate to the project root directory, and execute:
+
+```bash
+python3.12 -m venv .venv-mujoco
+source .venv-mujoco/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+This creates a dedicated Python 3.12 virtual environment and installs the dependencies from the same requirements file.
+
+### 3. Verify the Installation
+
+Check the Python version and installed packages:
+
+```bash
+python --version
+python -m pip list
+```
+
+Verify the numerical libraries:
+
+```bash
+python -c "import numpy, scipy, matplotlib; print('Core dependencies verified.')"
+```
+
+Verify the simulator packages:
+
+```bash
+python -c "import pybullet, mujoco; print('Simulator packages verified.')"
+```
+
+### Important Notes
+
+- Run these commands from the project root, where `requirements.txt` is located.
+- Keep the Windows and WSL virtual environments separate. A virtual environment created on Windows cannot be reused as a Linux environment.
+- Install dependencies using `python -m pip install -r requirements.txt` to respect the package version constraints specified by the project.
 
 ## Problem Statement
 
@@ -1514,3 +1590,91 @@ This figure compares the normalized physical-state Root Mean Square Error (RMSE)
 The comparison uses the same training/validation split, reference states, control inputs, validation transitions, units, and prediction-error conventions for both methods. This helps ensure that differences in the reported errors reflect model performance rather than inconsistent evaluation conditions.
 
 **Key objective:** Determine whether the Koopman lifted representation provides a more accurate physical-state predictor than a direct linear DMDc model under the tested simulation conditions.
+
+### PyBullet Simulation: Koopman-LQR Attitude Control
+
+![PyBullet simulation using the Koopman-LQR controller.](results/figures/pybullet_koopman_lqr_simulation.png)
+
+*Figure 9. PyBullet simulation using the Koopman-LQR controller for quadrotor regulation.*
+
+**Simulation overview**
+
+This experiment demonstrates the Koopman-LQR controller running in the PyBullet simulation environment. The quadrotor is regulated toward the designated 3D hover target, located at $x=0.00$ m, $y=0.00$ m, and $z=1.00$ m. The visualization displays the vehicle, the target ring, and the floor projection, which helps illustrate the target's position and altitude.
+
+**Observed performance**
+
+The simulation reports the following performance metrics:
+
+- **Position RMSE:** 0.1248 m, representing the root mean square position-tracking error.
+- **Attitude RMSE:** 1.938°, representing the root mean square attitude error.
+- **Settling time:** 1.15 s, indicating the reported time taken for the response to settle according to the simulation's evaluation criterion.
+
+The on-screen status confirms that the Koopman-LQR run has completed.
+
+**Interpretation**
+
+The displayed results indicate that the controller regulates the quadrotor toward the target while maintaining a small reported attitude error. The position RMSE quantifies the vehicle's position-tracking accuracy, while the attitude RMSE measures orientation error. Settling time provides an indication of how quickly the response stabilizes.
+
+Together, these metrics provide a quantitative summary of the displayed simulation run. They should be interpreted under the specific simulation conditions and metric definitions used by the implementation.
+
+### MuJoCo Simulation: Koopman-LQR Hover Control
+
+![MuJoCo simulation showing Koopman-LQR control of the quadrotor at the 3D hover target.](results/figures/mujoco_koopman_lqr_simulation.png)
+
+*Figure 10. MuJoCo simulation of Koopman-LQR attitude recovery and three-dimensional hover-position regulation.*
+
+**Simulation overview**
+
+This experiment demonstrates the Koopman-LQR controller running in the MuJoCo simulation environment. The mission is to recover the quadrotor's attitude and maintain its three-dimensional hover position at the target coordinates $(0,0,1.0)$ m.
+
+The bright gold ring marks the exact 3D hover target, while the dim lower ring represents its projection onto the ground plane. The vertical dotted guide connects the ground projection to the target altitude, helping visualize the target's height.
+
+**Observed performance**
+
+At the displayed simulation time of $4.7$ s out of $20$ s, the on-screen indicators report:
+
+- **Attitude tracking error:** $0.01^\circ$, indicating very close alignment with the desired attitude.
+- **Distance to target:** $0.021$ m, indicating that the quadrotor is approximately $2.1$ cm from the target position.
+- **Status:** `HOLDING TARGET`, indicating that the simulation reports successful target holding at this instant.
+
+**Interpretation**
+
+The screenshot shows the quadrotor closely aligned with its desired attitude and positioned near the designated hover target. These measurements demonstrate accurate regulation at the displayed instant in the MuJoCo simulation.
+
+The distance to target is an instantaneous position error, not a position RMSE. Similarly, the screenshot alone does not establish performance over the complete 20-second run. Full-duration logs and consistent performance metrics would be required to assess sustained hover accuracy and compare the controller quantitatively with PID and Koopman-MPC.
+
+## Conclusion
+
+This project developed a data-driven framework for quadrotor attitude modeling, prediction, and control using Koopman operator theory. The nonlinear rotational dynamics were represented through a higher-dimensional observable space using the lift map $\Phi(x_k)$, and Extended Dynamic Mode Decomposition (EDMD) was used to identify the finite-dimensional linear model:
+
+$$
+\Phi(x_{k+1}) = A\Phi(x_k) + Bu_k
+$$
+
+The identified model was evaluated on held-out trajectories, demonstrating close agreement between predicted and simulated attitude angles and body angular velocities in the one-step-ahead prediction results. Multi-step open-loop evaluation also showed that the EDMD Koopman models achieved lower normalized physical-state RMSE than the direct linear DMDc baseline under the evaluated conditions. The results further indicated that increasing the lifting order does not necessarily guarantee better prediction accuracy.
+
+For closed-loop attitude regulation, conventional PID, Koopman-LQR, and Koopman-MPC controllers were compared using attitude response, angular velocity, control torque, settling time, overshoot, and steady-state error. In the reported controller comparison, Koopman-LQR achieved the shortest settling times across roll, pitch, and yaw, while Koopman-MPC produced zero reported overshoot across all three channels. PID exhibited more pronounced overshoot and oscillations in the displayed responses. These findings characterize the trade-offs between convergence speed, transient response, and control effort for the evaluated conditions.
+
+Additional investigations examined measurement-noise sensitivity and disturbance-observer-based torque compensation. The controller implementations were also evaluated in PyBullet and MuJoCo, providing complementary simulation-based assessments of attitude regulation and three-dimensional hover behavior. These results should be interpreted within the tested simulation conditions rather than as evidence of real-flight performance.
+
+Overall, the project demonstrates how data-driven Koopman modeling can connect nonlinear attitude dynamics with linear prediction and control techniques. It combines model identification, quantitative prediction evaluation, controller comparison, and multi-simulator validation into a unified workflow. The results establish a foundation for further investigation of prediction accuracy, disturbance rejection, control robustness, and real-world quadrotor deployment.
+
+## References
+
+The following references provide the theoretical foundations and methodological background for the quadrotor attitude modeling, data-driven prediction, and control techniques used in this project.
+
+1. W. Zhu, F. Wu, J. Zhou, H. Du, J. Xiao, and L. Li, “Data-Driven Attitude Modeling and Control of Quadrotor UAVs using Koopman Operator,” in *2025 IEEE International Conference on Unmanned Systems (ICUS)*, 2025. [https://doi.org/10.1109/ICUS66297.2025.11294303](https://doi.org/10.1109/ICUS66297.2025.11294303)
+
+2. B. O. Koopman, “Hamiltonian Systems and Transformation in Hilbert Space,” *Proceedings of the National Academy of Sciences*, vol. 17, no. 5, pp. 315–318, 1931. [https://doi.org/10.1073/pnas.17.5.315](https://doi.org/10.1073/pnas.17.5.315)
+
+3. M. O. Williams, I. G. Kevrekidis, and C. W. Rowley, “A Data-Driven Approximation of the Koopman Operator: Extending Dynamic Mode Decomposition,” *Journal of Nonlinear Science*, vol. 25, no. 6, pp. 1307–1346, 2015. [https://doi.org/10.1007/s00332-015-9258-5](https://doi.org/10.1007/s00332-015-9258-5)
+
+4. J. L. Proctor, S. L. Brunton, and J. N. Kutz, “Dynamic Mode Decomposition with Control,” *SIAM Journal on Applied Dynamical Systems*, vol. 15, no. 1, pp. 142–161, 2016. [https://doi.org/10.1137/15M1013857](https://doi.org/10.1137/15M1013857)
+
+5. S. Narayanan, D. Tellez-Castro, S. Sutavani, et al., “SE(3) Koopman-MPC: Data-driven Learning and Control of Quadrotor UAVs,” *IFAC-PapersOnLine*, vol. 56, no. 3, pp. 607–612, 2023. [https://doi.org/10.1016/j.ifacol.2023.12.091](https://doi.org/10.1016/j.ifacol.2023.12.091)
+
+6. Y. Oh, M.-H. Lee, and J. Moon, “Koopman-Based Control System for Quadrotors in Noisy Environments,” *IEEE Access*, vol. 12, pp. 71675–71684, 2024. [https://doi.org/10.1109/ACCESS.2024.3403104](https://doi.org/10.1109/ACCESS.2024.3403104)
+
+7. G. H. Golub and C. F. van Loan, “An Analysis of the Total Least Squares Problem,” *SIAM Journal on Numerical Analysis*, vol. 17, no. 6, pp. 883–893, 1980. [https://doi.org/10.1137/0717073](https://doi.org/10.1137/0717073)
+
+8. A. Bayrak and M. Ö. Efe, “Disturbance Observer-Based Control Schemes for Quadrotors – A Tutorial,” *International Journal of General Systems*, vol. 51, no. 3, pp. 215–238, 2022. [https://doi.org/10.1080/03081079.2021.1998031](https://doi.org/10.1080/03081079.2021.1998031)
