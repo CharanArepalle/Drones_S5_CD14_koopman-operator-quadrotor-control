@@ -1643,6 +1643,13 @@ The screenshot shows the quadrotor closely aligned with its desired attitude and
 
 The distance to target is an instantaneous position error, not a position RMSE. Similarly, the screenshot alone does not establish performance over the complete 20-second run. Full-duration logs and consistent performance metrics would be required to assess sustained hover accuracy and compare the controller quantitatively with PID and Koopman-MPC.
 
+
+## Project Presentation
+
+The presentation covers nonlinear attitude dynamics, Koopman model identification using EDMD, LQR controller design, prediction accuracy, controller comparisons, DMDc benchmarking, measurement-noise sensitivity, and disturbance-observer-based compensation.
+
+**[Download the Project Presentation](docs/Presentation.pptx)**
+
 ## Conclusion
 
 This project developed a data-driven framework for quadrotor attitude modeling, prediction, and control using Koopman operator theory. The nonlinear rotational dynamics were represented through a higher-dimensional observable space using the lift map $\Phi(x_k)$, and Extended Dynamic Mode Decomposition (EDMD) was used to identify the finite-dimensional linear model:
